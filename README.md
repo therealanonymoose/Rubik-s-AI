@@ -1,6 +1,6 @@
 # Rubik's AI
 
-Foobar is a Python library for dealing with word pluralization.
+Rubik's AI is a project aimed at method and algorithm recognition, mainly using neural networks such as LSTMs.
 
 ## Installation
 
@@ -19,6 +19,7 @@ source myenv/bin/activate
 ```
 
 3. Install dependencies
+
 ```bash
 python3 -m pip install -r requirements.txt
 ```

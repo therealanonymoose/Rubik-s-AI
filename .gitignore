@@ -11,3 +11,6 @@ myenv/
 
 # VSCode files
 .vscode/
+
+# Temporary
+roadmap.md
