@@ -2,22 +2,29 @@
 # Uses PyCuber to manipulate cube, encode states, and save dataset
 
 import pycuber as pc
+import json
 from utils.encode import encode_cube  # PyCuber cube -> 6x3x3 int array
 from utils.export import save_dataset  # write to data json
 
+from solvers.cfop_solver import solve as cfop_solver
+
 # Configuration
-NUM_SOLVES_PER_METHOD = 500
+NUM_SOLVES_PER_METHOD = 10 #500
 METHODS = ["CFOP", "Roux", "ZZ"]
+
+with open("ref/move_mapping.json", "r") as f:
+    MOVE_IDS= json.load(f)
 
 def scramble(cube: pc.Cube):
     alg = pc.Formula().random()
     cube(alg)
 
-def solve(cube: pc.Cube, method: str) -> list:
-    # Apply a method-style solve using methods in /solvers
-    # Returns a list of moves in Singmaster notation
-    moves = []
-    return moves
+def solve(cube: pc.Cube, method: str) -> pc.Formula:
+    # Apply a method-style solve using methods in solvers/
+    # Returns a list of moves (formula) in Singmaster notation
+    if method == "CFOP":
+        return cfop_solver(cube)
+    return []
 
 def generate_dataset():
     dataset = []
@@ -31,7 +38,7 @@ def generate_dataset():
 
             for move in moves:
                 state = encode_cube(cube)  # 6x3x3 int array
-                steps.append({"state": state, "move": move})
+                steps.append({"state": state, "move": MOVE_IDS[str(move)]})
                 cube(move)
 
             dataset.append({

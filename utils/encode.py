@@ -4,7 +4,7 @@ import json
 
 # Load color mapping from JSON
 with open("ref/color_mapping.json", "r") as f:
-    COLOR_TO_ID = json.load(f)
+    COLOR_IDS = json.load(f)
 
 def encode_cube(cube: pc.Cube) -> list:
     #Encode PyCuber cube state into 6x3x3 int array
@@ -16,6 +16,6 @@ def encode_cube(cube: pc.Cube) -> list:
             for col in range(3):
                 sticker = face[row][col]
                 # Convert sticker color letter to int
-                face_array[row].append(COLOR_TO_ID[str(sticker).strip("[]")])
+                face_array[row].append(COLOR_IDS[str(sticker).strip("[]")])
         state.append(face_array)
     return state
