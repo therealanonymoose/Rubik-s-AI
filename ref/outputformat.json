@@ -1,0 +1,24 @@
+{
+    "method": "CFOP",
+    "steps": [
+        {
+            "state": [["This is a 6x6x6 array that represents cube state with each entry being a color id 0-5"]],
+            "move": 3
+        },
+        {
+            "state": [["The move numbers are assigned to standard move notation such as U, R, L, etc."]],
+            "move": 7
+        },
+        {
+            "state": [
+                [[0,0,0],[0,0,0],[0,0,0]],
+                [[1,1,1],[1,1,1],[1,1,1]],
+                [[2,2,2],[2,2,2],[2,2,2]],
+                [[3,3,3],[3,3,3],[3,3,3]],
+                [[4,4,4],[4,4,4],[4,4,4]],
+                [[5,5,5],[5,5,5],[5,5,5]]
+            ],
+            "move": 9
+        }
+    ]
+}
