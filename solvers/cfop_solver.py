@@ -5,9 +5,8 @@ from pycuber.solver import CFOPSolver
 
 def solve(cube: pc.Cube) -> pc.Formula:
     # Solves the cube using CFOP method and returns a list of moves in Singmaster notation
-    solver = CFOPSolver(cube)
-    solution_formula = solver.solve(suppress_progress_messages=True)
-    return solution_formula
+    solver: CFOPSolver = CFOPSolver(cube)
+    return solver.solve(suppress_progress_messages=True)
 
 
 # Example usage
