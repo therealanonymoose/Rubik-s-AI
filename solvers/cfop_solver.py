@@ -17,3 +17,6 @@ if __name__ == "__main__":
     moves = solve(c)
     print("Scramble:", scramble)
     print("CFOP solution:", moves)
+
+    import utils.solvecheck as sc
+    print("Solved:", sc.is_solved(c))
