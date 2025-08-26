@@ -12,5 +12,12 @@ myenv/
 # VSCode files
 .vscode/
 
-# Temporary
-roadmap.md
+# Files created when packaging app
+*.o
+SSMaster.app/
+.qmake.stash
+default.xml
+Makefile
+moc_*
+qrc_*
+ui_*
