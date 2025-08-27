@@ -2,17 +2,37 @@
 # Uses PyCuber to manipulate cube, encode states, and save dataset
 
 import pycuber as pc
-import json
-import random
-import re
+import json, random, re, os
 from utils.encode import encode_cube  # PyCuber cube -> 6x3x3 int array
 from utils.export import save_dataset  # write to data jsonimport json
 from utils.solvecheck import is_valid_solution as check
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+random.seed(42)  # For reproducibility
 
-def extract(dataset: str) -> list[dict]:
+def expand_lbl_moves(moves):
+    all_moves = []
+
+    for s in moves:
+        # Find all groups with optional repetition or single moves
+        tokens = re.findall(r'\([^\)]+\)\d*|[^\s]+', s)
+        for t in tokens:
+            # Match parenthesis with repetition, e.g. (R' D')2
+            m = re.match(r'\((.*?)\)(\d*)', t)
+            if m:
+                group, count = m.groups()
+                count = int(count) if count else 1
+                moves_in_group = group.split()
+                all_moves.extend(moves_in_group * count)
+            else:
+                # Single move, just strip parentheses if any
+                all_moves.append(t.strip("()"))
+    
+    return all_moves
+
+def extract(data: str) -> list[dict]:
     # Get Scramble and Solution strings from solves.json
-    with open(dataset, "r") as f:
+    with open(os.path.join(BASE_DIR, data), "r") as f:
         data = json.load(f)
 
     results = []
@@ -28,29 +48,38 @@ def extract(dataset: str) -> list[dict]:
         scramble_match = re.search(r"Scramble: \[([^\]]+)\]", report)
         scramble = scramble_match.group(1) if scramble_match else "Unknown scramble"
 
-        # Extract the "Best solve" section
-        best_match = re.search(r"Best.*?Metric:", report, re.DOTALL)
-        section = best_match.group(0) if best_match else "Unknown solution"
+        if method == "LBL":
+            best_match = re.search(r"cross in layer.*?Metric:", report, re.DOTALL)
+            section = best_match.group(0) if best_match else "Unknown solution"
+        else:
+            # Extract the "Best solve" section
+            best_match = re.search(r"Best.*?Metric:", report, re.DOTALL)
+            section = best_match.group(0) if best_match else "Unknown solution"
         # Extract all move strings inside <span ...>...</span>
         moves = re.findall(r"<span[^>]*>([^<]+)</span>", section)
+
         # Clean moves (remove leading/trailing spaces)
-        moves = [move for m in moves if m.strip() for move in m.strip().split()]
+        # If LBL, expand parentheses; eg (R U)2 = R U R U
+        if method == "LBL":
+            solution = expand_lbl_moves(moves)
+        else:
+            solution = [move for m in moves if m.strip() for move in m.strip().split()]
         results.append({
             "method": method,
             "scramble": scramble,
-            "solution": moves
+            "solution": solution
         })
     
     return results
 
-def generate_dataset() -> list[dict]:
-    with open("ref/rotations.json", "r") as f:
+def generate_dataset(data: str) -> list[dict]:
+    with open(os.path.join(BASE_DIR, "ref", "rotations.json"), "r") as f:
         ROTATIONS = [pc.Formula(r) for r in json.load(f)]
-    with open("ref/move_mapping.json", "r") as f:
+    with open(os.path.join(BASE_DIR, "ref", "move_mapping.json"), "r") as f:
         MOVE_IDS = json.load(f)
 
     dataset = []
-    solves = extract("solves.json")
+    solves = extract("exports/" + data)
 
     for solve in solves:
         if check(solve["scramble"], solve["solution"]):
@@ -74,9 +103,9 @@ def generate_dataset() -> list[dict]:
     return dataset
 
 def main() -> None:
-    dataset: list[dict] = generate_dataset()
-    save_dataset(dataset, "data.json")
-    print("Dataset generation complete! Saved to data.json")
+    dataset: list[dict] = generate_dataset("lbl+cfop+roux+zz+petrus.json")
+    save_dataset(dataset, os.path.join(BASE_DIR, "data", "lbl+cfop+roux+zz+petrus.json"))
+    print("Dataset generation complete! Saved to lbl+cfop+roux+zz+petrus.json")
 
 if __name__ == "__main__":
     main()

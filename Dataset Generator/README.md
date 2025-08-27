@@ -43,7 +43,7 @@ make
 
 ## Setup Python
 
-Create virtual environment
+Create virtual environment (--copies is for externally managed systems like homebrew)
 
 ```bash
 python3 -m venv --copies myenv
@@ -65,4 +65,4 @@ Within the app, select the desired `Method` and `Number of Scrambles` from the d
 
 ## Parsing
 
-To parse the exported json, simply run `parse.py`
+To parse the exported json, simply update the files names in `parse.py` to match desired input and output locations and run the file.
