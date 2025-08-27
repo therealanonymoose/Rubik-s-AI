@@ -21,3 +21,6 @@ Makefile
 moc_*
 qrc_*
 ui_*
+
+# Datasets that are too large (Git LFS didn't work)
+lbl+cfop+roux+zz+petrus.json
