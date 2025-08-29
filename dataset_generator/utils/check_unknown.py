@@ -1,6 +1,6 @@
 # Script to check how many unknown solutions exist in the dataset
 
-from parse import extract # Run from Dataset Generator to resolve imports: ./myenv/bin/python -m utils.check_unknown
+from parse import extract # Run from dataset_generator to resolve imports: ./myenv/bin/python -m utils.check_unknown
 
 def check(data: str, print_unknown=False) -> int:
     solves = extract("exports/" + data)

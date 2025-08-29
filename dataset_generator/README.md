@@ -61,7 +61,7 @@ In VSCode, this means running the `Python: Select Interpreter` command and selec
 
 ## Generation
 
-Within the app, select the desired `Method` and `Number of Scrambles` from the dropdowns. Then, click `Start` and wait for the process to finish (the last solution should be displayed then). Then, click `Export History` and select the `Dataset Generator` folder (in order to run `parse.py`). Repeat for all desired methods.
+Within the app, select the desired `Method` and `Number of Scrambles` from the dropdowns. Then, click `Start` and wait for the process to finish (the last solution should be displayed then). Then, click `Export History` and select the `dataset_generator/exports` folder (in order to run `parse.py`). Repeat for all desired methods. Keeping the app running to export everything at once is ideal; if not the jsons must be combined manually.
 
 ## Parsing
 

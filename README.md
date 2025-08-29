@@ -4,6 +4,6 @@ Rubik's AI is a project aimed at method and algorithm recognition, mainly using 
 
 ## Installation
 
-Follow the steps in `Dataset Generator/README.md` to generate a new dataset
+Follow the steps in `dataset_generator/README.md` to generate a new dataset
 
 ## Usage
