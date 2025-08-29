@@ -24,3 +24,5 @@ ui_*
 
 # Datasets that are too large (Git LFS didn't work)
 lbl+cfop+roux+zz+petrus.json
+# Test file that loads quickly
+zz.json

@@ -105,8 +105,8 @@ def generate_dataset(data: str) -> list[dict]:
 
 def main() -> None:
     dataset: list[dict] = generate_dataset("lbl+cfop+roux+zz+petrus.json")
-    file = "lbl+cfop+roux+zz+petrus.json"
-    save_dataset(dataset, os.path.join(BASE_DIR, "data", file), False)
+    file = "lbl+cfop+roux+zz+petrus_compact.json"
+    save_dataset(dataset, os.path.join(BASE_DIR, "data", file))
     print(f"Dataset generation complete! Saved to {file}")
 
 if __name__ == "__main__":
