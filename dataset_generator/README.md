@@ -43,7 +43,7 @@ make
 
 ## Setup Python
 
-Create virtual environment (--copies is for externally managed systems like homebrew)
+Create virtual environment; ideally inside dataset_generator (--copies is for externally managed systems like homebrew)
 
 ```bash
 python3 -m venv --copies myenv

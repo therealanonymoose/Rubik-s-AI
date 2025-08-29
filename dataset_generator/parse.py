@@ -88,6 +88,7 @@ def generate_dataset(data: str) -> list[dict]:
             cube(solve["scramble"])
 
             moves = solve["solution"]
+            moves.append("") # Forces one more iteration to make the last move in each entry a solved cube
             steps = []
 
             for move in moves:
@@ -104,8 +105,9 @@ def generate_dataset(data: str) -> list[dict]:
 
 def main() -> None:
     dataset: list[dict] = generate_dataset("lbl+cfop+roux+zz+petrus.json")
-    save_dataset(dataset, os.path.join(BASE_DIR, "data", "lbl+cfop+roux+zz+petrus.json"))
-    print("Dataset generation complete! Saved to lbl+cfop+roux+zz+petrus.json")
+    file = "lbl+cfop+roux+zz+petrus.json"
+    save_dataset(dataset, os.path.join(BASE_DIR, "data", file), False)
+    print(f"Dataset generation complete! Saved to {file}")
 
 if __name__ == "__main__":
     main()
